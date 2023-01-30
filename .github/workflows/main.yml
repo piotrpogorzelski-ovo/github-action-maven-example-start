@@ -19,11 +19,6 @@ jobs:
       with:
         java-version: 17
 
-    - name: Extract Maven project version
-      run: echo ::set-output name=version::$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)
-      id: project
-    - name: Show extracted Maven project version
-      run: echo ${{ steps.project.outputs.version }}
 
     - name: Cache the Maven packages to speed up build
       uses: actions/cache@v1
@@ -44,6 +39,13 @@ jobs:
         - uses: actions/setup-java@v1
           with:
             java-version: 17
+        
+        - name: Extract Maven project version
+          run: echo "name=$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)"   >> $GITHUB_OUTPUT  
+          id: project
+        - name: Show extracted Maven project version
+          run: echo ${{ steps.project.outputs.version }}
+          
         - run: mvn -B package --file pom.xml -DskipTests
         - uses: actions/upload-artifact@v1
           with:
