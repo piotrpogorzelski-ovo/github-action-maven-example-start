@@ -42,9 +42,9 @@ jobs:
         - name: mvn version
           run: mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec
         - name: Extract Maven project version
-          run: echo "version=$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)"   >> $env:GITHUB_OUTPUT
+          run: echo "version=$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)"   >> $GITHUB_OUTPUT
         - name: set xversion
-          run: echo xversion=$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)   >> $env:GITHUB_ENV 
+          run: echo xversion=$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)   >> $GITHUB_ENV 
           id: project
         - name: Show extracted Maven project version
           run: echo ${{ steps.project.outputs.version }}
