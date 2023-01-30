@@ -44,12 +44,12 @@ jobs:
         - name: Extract Maven project version
           run: echo "name=$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)"   >> $GITHUB_OUTPUT
         - name: set xversion
-          run: echo xname=$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)   >> $GITHUB_OUTPUT 
+          run: echo xname=$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)   >> $GITHUB_ENV 
           id: project
         - name: Show extracted Maven project version
           run: echo ${{ steps.project.outputs.version }}
         - name: disp xversion
-          run: echo ${{ steps.project.outputs.xversion }}
+          run: echo ${{ env.xversion }}
           
         - run: mvn -B package --file pom.xml -DskipTests
         - uses: actions/upload-artifact@v1
