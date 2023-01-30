@@ -39,18 +39,7 @@ jobs:
         - uses: actions/setup-java@v1
           with:
             java-version: 17
-        - name: mvn version
-          run: mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec
-        - name: Extract Maven project version
-          run: echo "version=$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)"   >> $GITHUB_OUTPUT
-          id: project
-        - name: set xversion
-          run: echo xversion=$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)   >> $GITHUB_ENV 
-          id: projectenv
-        - name: Show extracted Maven project version
-          run: echo ${{ steps.project.outputs.version }}
-        - name: disp xversion
-          run: echo ${{ env.xversion }}
+
           
         - run: mvn -B package --file pom.xml -DskipTests
         - uses: actions/upload-artifact@v1
